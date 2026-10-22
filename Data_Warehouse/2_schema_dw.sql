@@ -1,4 +1,5 @@
 
+--SELECT '=== Loading company_dim table===' AS info
 INSERT INTO company_dim(
     company_id,
     name
@@ -61,3 +62,17 @@ FROM read_csv('https://storage.googleapis.com/sql_de/job_postings_fact.csv',
  SELECT skill_id, job_id
  FROM read_csv('https://storage.googleapis.com/sql_de/skills_job_dim.csv',
  AUTO_DETECT = true);
+
+
+---Useful for checking the loaded number of rows
+SELECT 'Company Dim' AS table_name, COUNT(*) as record_count
+FROM company_dim,
+UNION ALL
+SELECT 'SKIlls DIM',COUNT(*) FROM skills_dim
+UNION ALL
+SELECT 'job posting facts', COUNT(*), from job_postings_fact
+UNION ALL
+SELECT 'skills job dim', COUNT(*), FROM skills_job_dim;
+
+---Useful for checking what was previously loaded inside a table 
+SELECT * FROM job_postings_fact LIMIT 10;
