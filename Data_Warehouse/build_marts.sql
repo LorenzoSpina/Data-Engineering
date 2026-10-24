@@ -8,3 +8,5 @@ SQL script for building from scratch a new data warehouse
 .read 2_schema_dw.sql
 --create the job flat mart
 .read 3_create_flat_mart.sql
+--create skill demand mart
+.read 4_create_skills_mart.sql
