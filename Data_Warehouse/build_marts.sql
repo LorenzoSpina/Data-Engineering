@@ -10,3 +10,7 @@ SQL script for building from scratch a new data warehouse
 .read 3_create_flat_mart.sql
 --create skill demand mart
 .read 4_create_skills_mart.sql
+--create priority mart
+.read 5_create_priority_mart.sql
+--update priority mart
+.read 6_update_priority_mart.sql
