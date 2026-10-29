@@ -1,6 +1,6 @@
 # Exploratory Data Analysis with SQL: Data Engineer Job Market
 
-<!-- ![Project overview](images/eda_overview.png) -->
+ ![Project overview](../images/1_1_Project1_EDA.png)
 
 An SQL project that analyzes the Data Engineer job market through three analytical queries, turning business questions into data-driven insights.
 
@@ -27,7 +27,7 @@ The analysis aims to answer three questions:
 
 The analysis runs on a data warehouse with a star schema design.
 
-<!-- ![Star schema](images/star_schema.png) -->
+ ![Star schema](../images/1_2_Data_Warehouse.png) -->
 
 - **Fact table:** `job_postings_fact`, the central table with job posting details (titles, locations, salaries, dates, etc.)
 - **Dimension tables:**
