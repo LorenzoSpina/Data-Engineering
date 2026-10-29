@@ -61,8 +61,8 @@ The warehouse implements a star schema using `company_dim`, `skills_dim`, `job_p
 ![Star schema](../images/1_2_Data_Warehouse.png) 
 
 - **SQL files:**
-  - `1_create_tables_dw.sql`: defines the star schema (4 core tables)
-  - `2_load_schema_dw.sql`: extracts CSVs from GCS and loads them into the warehouse tables
+  - **[1_create_tables_dw](./1_create_tables_dw.sql)** defines the star schema (4 core tables)
+  - **[2_load_schema_dw](./2_load_schema_dw.sql)**: extracts CSVs from GCS and loads them into the warehouse tables
 - **Purpose:** single source of truth for analytical queries
 - **Grain:** one row per job posting in the fact table (`job_postings_fact`)
 
@@ -72,7 +72,7 @@ Denormalized table with all dimensions, for ad-hoc queries.
 
 ![Flat mart](../images/1_2_Flat_Mart.png)
 
-- **SQL file:** `3_create_flat_mart.sql`
+- **SQL file:** **[3_create_flat_mart](./3_create_flat_mart.sql)**
 - **Purpose:** quick ad-hoc queries without joins
 - **Grain:** one row per job posting, all dimensions joined
 
@@ -82,7 +82,7 @@ Time-series analysis of skill demand with additive measures.
 
  ![Skills mart](../images/1_2_Skills_Mart.png) 
 
-- **SQL file:** `4_create_skills_mart.sql`
+- **SQL file:** **[4_create_skills_mart.sql](./4_create_skills_mart.sql)**
 - **Purpose:** analyze skill demand over time
 - **Grain:** `skill_id` + `month_start_date` + `job_title_short`
 - **Key feature:** all measures are additive (counts/sums), so they can be safely re-aggregated
@@ -94,8 +94,8 @@ Priority role tracking with incremental updates via `MERGE`.
  ![Priority mart](../images/1_2_Priority_Mart.png) 
 
 - **SQL files:**
-  - `5_create_priority_mart.sql`: initial build of priority roles and jobs snapshot
-  - `6_update_priority_mart.sql`: incremental update using `MERGE` (upsert pattern)
+  - **[5_create_priority_mart.sql](./5_create_priority_mart.sql)**: initial build of priority roles and jobs snapshot
+  - **[6_update_priority_mart.sql](./6_update_priority_mart.sql)**: incremental update using `MERGE` (upsert pattern)
 - **Purpose:** track priority roles and job snapshots with incremental update capabilities
 - **Grain:** one row per job posting with a priority level assigned
 - **Key feature:** `MERGE` handles INSERT, UPDATE and DELETE in a single statement, a production-ready upsert pattern

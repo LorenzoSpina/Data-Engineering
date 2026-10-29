@@ -13,9 +13,9 @@ An SQL project that analyzes the Data Engineer job market through three analytic
 
 **Files in this project:**
 
-- `1_EDA.sql`: demand analysis with multi-table joins
-- `2_EDA.sql`: salary analysis with aggregations
-- `3_EDA.sql`: combined demand/salary optimization query
+- **[1_EDA.sql](./EDA_1.sql)**: demand analysis with multi-table joins
+- **[2_EDA.sql](./EDA_2.sql)**: salary analysis with aggregations
+- **[3_EDA.sql](./EDA_3.sql)**: combined demand/salary optimization query
 
 ## Problem & Context
 
@@ -60,9 +60,9 @@ This model makes it possible to extract insights on skills, salaries and optimal
 
 ### Query Structure
 
-1. **Top Demanded Skills:** identifies the 10 most in-demand skills for remote Data Engineer positions.
-2. **Top Paying Skills:** analyzes the 25 highest-paying skills with salary and demand metrics.
-3. **Optimal Skills:** computes an optimal score combining the natural log of demand with median salary, to identify the most valuable skills to learn.
+1. **[Top demanded skills](./EDA_1.sql)** identifies the 10 most in-demand skills for remote Data Engineer positions.
+2. **[Top paying skills](./EDA_2.sql)** analyzes the 20 highest-paying skills with salary and demand metrics.
+3. **[Optimal skills](./EDA_3.sql)** computes an optimal score combining the natural log of demand with median salary, to identify the most valuable skills to learn.
 
 ### Key Insights
 
