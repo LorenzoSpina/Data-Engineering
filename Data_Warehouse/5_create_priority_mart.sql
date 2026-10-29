@@ -1,9 +1,13 @@
 --Step 5 create priority roles mart
 
+
+--Drop the schema if already exists (idempotency purpose)
 DROP SCHEMA IF EXISTS priority_mart CASCADE;
 
+--Create new schema
 CREATE SCHEMA priority_mart;
 
+--priority_roles table creation and population
 CREATE TABLE priority_mart.priority_roles(
     role_id INTEGER PRIMARY KEY,
     role_name VARCHAR,
@@ -21,9 +25,11 @@ VALUES
 (2,'Senior Data Engineer', 1),
 (3,'Software Engineer', 3);
 
+--check the prev. population
 SELECT * FROM priority_mart.priority_roles;
 
-
+--Creation of temporary table priority_job_snapshot wich contains a 
+--snapshot of jobs priority levels
 CREATE OR REPLACE TABLE priority_mart.priority_jobs_snapshot(
     job_id INTEGER PRIMARY KEY,
     job_title_short VARCHAR,
@@ -45,27 +51,34 @@ INSERT INTO priority_mart.priority_jobs_snapshot(
 )
 
 SELECT
-jpf.job_id,
-jpf.job_title_short,
-cd.name AS company_name,
-jpf.job_posted_date,
-jpf.salary_year_avg,
-r.priority_lvl,
-CURRENT_TIMESTAMP
+    jpf.job_id,
+    jpf.job_title_short,
+    cd.name AS company_name,
+    jpf.job_posted_date,
+    jpf.salary_year_avg,
+    r.priority_lvl,
+    CURRENT_TIMESTAMP
 FROM 
-job_postings_fact as jpf
+    job_postings_fact as jpf
 LEFT JOIN company_dim AS cd
         ON jpf.company_id = cd.company_id
 INNER JOIN priority_mart.priority_roles AS r
         ON jpf.job_title_short = r.role_name;
 
+--Mart verification creation
+SELECT 'Priority Roles Dimension' AS table_name, COUNT(*) as record_count FROM priority_mart.priority_roles
+UNION ALL
+SELECT 'Priority Jobs Snapshot', COUNT(*) FROM priority_mart.priority_jobs_snapshot;
 
+--Table verification
 SELECT 
-job_title_short,
-COUNT(*) AS job_count,
-MIN(priority_lvl) AS priority_lvl,
-MIN(updated_at) AS updated_at
+    job_title_short,
+    COUNT(*) AS job_count,
+    MIN(priority_lvl) AS priority_lvl,
+    MIN(updated_at) AS updated_at
 FROM priority_mart.priority_jobs_snapshot
 GROUP BY job_title_short
 ORDER BY job_count;
+
+SELECT * FROM priority_mart.priority_roles;
 

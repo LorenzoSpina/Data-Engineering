@@ -1,17 +1,19 @@
---Step 1 create the datawarehouse star schema tables
+--Step 1 create the datawarehouse and the star schema tables
 
+--Drop the tables if they already exists (for idempotent execution)
 DROP TABLE IF EXISTS skills_job_dim;
 DROP TABLE IF EXISTS job_postings_fact;
 DROP TABLE IF EXISTS company_dim;
 DROP TABLE IF EXISTS skills_dim;
 
 
-
+--company_dim table creation
 CREATE TABLE company_dim(
     company_id INTEGER PRIMARY KEY,
     name VARCHAR
 );
 
+--skill_dim table creation
 CREATE TABLE skills_dim (
     skill_id INTEGER PRIMARY KEY,
     skills VARCHAR,
@@ -19,6 +21,7 @@ CREATE TABLE skills_dim (
 
 );
 
+--job_postings_fact table creation
 CREATE TABLE job_postings_fact(
    job_id INTEGER PRIMARY KEY,
    company_id    INTEGER,
@@ -40,6 +43,7 @@ CREATE TABLE job_postings_fact(
 
 );
 
+--skills_job_dim table creation (only after the creation of job_postings_fact)
 CREATE TABLE skills_job_dim(
     skill_id INTEGER ,
     job_id INTEGER ,
@@ -48,6 +52,5 @@ CREATE TABLE skills_job_dim(
     FOREIGN KEY (job_id) REFERENCES job_postings_fact(job_id)
 );
 
-SELECT table_name
-FROM information_schema.tables
-WHERE table_schema = 'main';
+--verify the tables creation
+SHOW TABLES;

@@ -1,9 +1,15 @@
--- 1. Reset dello Schema
+--Step 4 Skills demand mart (dimensional mart)
+
+--Schema reset if it already exists (idempotency purpose)
 DROP SCHEMA IF EXISTS skills_mart CASCADE;
+
+--Schema creation
 CREATE SCHEMA skills_mart;
 
 
--- 2. Creazione e Popolamento della tabella Dimensionale Skills
+--Creation of dimension tables
+
+-- dim_skill table creation
 CREATE TABLE skills_mart.dim_skills (
     skill_id INTEGER PRIMARY KEY,
     skills VARCHAR,
@@ -22,7 +28,7 @@ SELECT
 FROM skills_dim;
 
 
--- 3. Creazione e Popolamento della tabella Dimensionale Date (Mesi)
+-- Date dimension table creation
 CREATE TABLE skills_mart.dim_date_month (
     month_start_date DATE PRIMARY KEY,
     year INTEGER,
@@ -51,7 +57,7 @@ FROM job_postings_fact
 ORDER BY month_start_date;
 
 
-
+--Creation of fact_skill_demand_monthly
 CREATE TABLE skills_mart.fact_skill_demand_monthly (
     skill_id INTEGER,
     month_start_date DATE,
@@ -90,28 +96,30 @@ SELECT
     CASE WHEN jpf.job_no_degree_mention = TRUE THEN 1 ELSE 0 END AS no_degree_mentioned
 FROM job_postings_fact AS jpf
 INNER JOIN skills_job_dim AS sjd
-on sjd.job_id = jpf.job_id
+ON sjd.job_id = jpf.job_id
 )
 
 SELECT
-skill_id,
-month_start_date,
-job_title_short,
-COUNT(*) AS posting_count,
-SUM(is_remote) remote_postings_count,
-SUM(has_health_insurance) health_insurance_postings_count,
-SUM(no_degree_mentioned) no_degree_mention_postings_count
+    skill_id,
+    month_start_date,
+    job_title_short,
+    COUNT(*) AS posting_count,
+    SUM(is_remote) remote_postings_count,
+    SUM(has_health_insurance) health_insurance_postings_count,
+    SUM(no_degree_mentioned) no_degree_mention_postings_count
 FROM
-job_postings_prep
+    job_postings_prep
 GROUP BY ALL
 ORDER BY skill_id, month_start_date, job_title_short;
 
+--Mart creation verification
 SELECT  'Skill Dimension' AS table_name, COUNT(*) as record_count FROM skills_mart.dim_skills
 UNION ALL
 SELECT 'Date Month Dimension', COUNT(*) FROM skills_mart.dim_date_month
 UNION ALL
 SELECT 'Skill Demand Fact', COUNT(*) FROM skills_mart.fact_skill_demand_monthly;
 
+--Mart rows check
 SELECT * FROM skills_mart.dim_skills LIMIT 10;
 
 SELECT * FROM skills_mart.dim_date_month LIMIT 10;
