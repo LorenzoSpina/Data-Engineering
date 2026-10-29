@@ -1,11 +1,11 @@
 /*
-SQL script for building from scratch a new data warehouse
+SQL script for building from scratch a new data warehouse and marts
 */
 
 --create tables from scratch.
 .read 1_create_tables_dw.sql
 --load the previous table with data coming from csv files as source.
-.read 2_schema_dw.sql
+.read 2_load_schema_dw.sql
 --create the job flat mart
 .read 3_create_flat_mart.sql
 --create skill demand mart
