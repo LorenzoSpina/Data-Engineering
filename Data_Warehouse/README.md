@@ -2,7 +2,7 @@
 
 An end-to-end Data Engineering project: raw CSV files stored on Google Cloud Storage are loaded into a normalized star-schema data warehouse, on top of which specialized data marts are built for analytics.
 
-![Pipeline overview](images/1_2_Project2_Data_Pipeline.png)
+![Pipeline overview](../images/1_2_Project2_Data_Pipeline.png)
 
 ## Executive Summary
 
@@ -27,13 +27,13 @@ The data arrives as raw CSV files on Google Cloud Storage, not structured for an
 
 | Area | Tool |
 |---|---|
-| 🐤 Database | DuckDB (file-based OLAP database with GCS integration via `httpfs`) |
-| 🧮 Language | SQL (DDL for schema design, DML for loading and transformation) |
-| 📊 Data model | Star schema (fact + dimension + bridge tables) |
-| 🛠️ Development | VS Code for SQL editing + terminal for DuckDB CLI execution |
-| 🔧 Automation | Master SQL script for pipeline orchestration |
-| 📦 Version control | Git / GitHub |
-| ☁️ Storage | Google Cloud Storage (source CSV files) |
+|  Database | DuckDB (file-based OLAP database with GCS integration via `httpfs`) |
+|  Language | SQL (DDL for schema design, DML for loading and transformation) |
+|  Data model | Star schema (fact + dimension + bridge tables) |
+|  Development | VS Code for SQL editing + terminal for DuckDB CLI execution |
+|  Automation | Master SQL script for pipeline orchestration |
+|  Version control | Git / GitHub |
+|  Storage | Google Cloud Storage (source CSV files) |
 
 ## Repository Structure
 
@@ -52,13 +52,13 @@ The data arrives as raw CSV files on Google Cloud Storage, not structured for an
 
 The pipeline takes the job posting CSVs from GCS and transforms them into a normalized star-schema warehouse. Specialized marts are then built on top of it. Both the warehouse and the marts can be consumed by BI tools.
 
-![Pipeline architecture](images/1_2_Project2_Data_Pipeline.png) 
+![Pipeline architecture](../images/1_2_Project2_Data_Pipeline.png) 
 
 ### Data Warehouse
 
 The warehouse implements a star schema using `company_dim`, `skills_dim`, `job_postings_fact` and `skills_job_dim`.
 
-![Star schema](images/1_2_Data_Warehouse.png) 
+![Star schema](../images/1_2_Data_Warehouse.png) 
 
 - **SQL files:**
   - `1_create_tables_dw.sql`: defines the star schema (4 core tables)
@@ -70,7 +70,7 @@ The warehouse implements a star schema using `company_dim`, `skills_dim`, `job_p
 
 Denormalized table with all dimensions, for ad-hoc queries.
 
-![Flat mart](images/1_2_Flat_Mart.png)
+![Flat mart](../images/1_2_Flat_Mart.png)
 
 - **SQL file:** `3_create_flat_mart.sql`
 - **Purpose:** quick ad-hoc queries without joins
@@ -80,7 +80,7 @@ Denormalized table with all dimensions, for ad-hoc queries.
 
 Time-series analysis of skill demand with additive measures.
 
- ![Skills mart](images/1_2_Skills_Mart.png) 
+ ![Skills mart](../images/1_2_Skills_Mart.png) 
 
 - **SQL file:** `4_create_skills_mart.sql`
 - **Purpose:** analyze skill demand over time
@@ -91,7 +91,7 @@ Time-series analysis of skill demand with additive measures.
 
 Priority role tracking with incremental updates via `MERGE`.
 
- ![Priority mart](images/1_2_Priority_Mart.png) 
+ ![Priority mart](../images/1_2_Priority_Mart.png) 
 
 - **SQL files:**
   - `5_create_priority_mart.sql`: initial build of priority roles and jobs snapshot
