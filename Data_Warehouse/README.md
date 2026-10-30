@@ -1,4 +1,4 @@
-# Job Postings Data Pipeline: GCS → Star Schema DW → Analytical Marts
+# Data Warehouse & Mart Build: Production ETL Pipeline
 
 An end-to-end Data Engineering project: raw CSV files stored on Google Cloud Storage are loaded into a normalized star-schema data warehouse, on top of which specialized data marts are built for analytics.
 
